@@ -11,13 +11,13 @@
 
 @interface DeformationButton : UIButton
 
-@property(nonatomic, assign)BOOL isLoading;
-@property(nonatomic, retain)MMMaterialDesignSpinner *spinnerView;
-@property(nonatomic, retain)UIColor *contentColor;
-@property(nonatomic, retain)UIColor *progressColor;
+@property(nonatomic, assign) BOOL isLoading;
+@property(nonatomic, strong) MMMaterialDesignSpinner *spinnerView;
+@property(nonatomic, strong) UIColor *contentColor;
+@property(nonatomic, strong) UIColor *progressColor;
 
-@property(nonatomic, retain)UIButton *forDisplayButton;
+@property(nonatomic, strong) UIButton *forDisplayButton;
 
-- (instancetype)initWithFrame:(CGRect)frame withColor:(UIColor*)color;
+- (instancetype)initWithFrame:(CGRect)frame color:(UIColor*)color cornerRadius:(CGFloat)cornerRadius;
 
 @end

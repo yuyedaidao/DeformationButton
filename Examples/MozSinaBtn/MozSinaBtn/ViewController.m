@@ -37,7 +37,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    deformationBtn = [[DeformationButton alloc]initWithFrame:CGRectMake(100, 100, 140, 36) withColor:[self getColor:@"e13536"]];
+    deformationBtn = [[DeformationButton alloc] initWithFrame:CGRectMake(100, 100, 140, 36) color:[UIColor redColor] cornerRadius:18];
+    
     [self.view addSubview:deformationBtn];
 
     [deformationBtn.forDisplayButton setTitle:@"微博注册" forState:UIControlStateNormal];
@@ -54,6 +55,7 @@
 
 - (void)testTap{
     NSLog(@"testTap");
+    deformationBtn.isLoading = !deformationBtn.isLoading;
 }
 
 - (void)btnEvent{

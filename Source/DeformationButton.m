@@ -15,25 +15,22 @@
     CGFloat scale;
     UIView *bgView;
     UIImage *btnBackgroundImage;
+    CGFloat cornerRadius;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame withColor:(UIColor*)color
+- (instancetype)initWithFrame:(CGRect)frame color:(UIColor*)color cornerRadius:(CGFloat)_cornerRadius
 {
     self = [super initWithFrame:frame];
     if (self) {
+        cornerRadius = _cornerRadius;
         [self initSettingWithColor:(UIColor*)color];
     }
     return self;
 }
 
--(CGRect)frame{
-    CGRect frame = [super frame];
-    self.forDisplayButton.frame = frame;
-    return frame;
-}
 
 - (UIImage*)imageWithColor:(UIColor*)color cornerRadius:(CGFloat)cornerRadius{
-    CGRect rect = CGRectMake(0, 0, cornerRadius*2+10, cornerRadius*2+10);
+    CGRect rect = self.bounds;
     
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius];
     path.lineWidth = 0;
@@ -60,7 +57,7 @@
     bgView.backgroundColor = color;
     bgView.userInteractionEnabled = NO;
     bgView.hidden = YES;
-    bgView.layer.cornerRadius = 3;
+    bgView.layer.cornerRadius = cornerRadius;
     bgView.layer.masksToBounds = NO;
     [self addSubview:bgView];
     
@@ -70,7 +67,7 @@
     
     MMMaterialDesignSpinner *spinnerView = [[MMMaterialDesignSpinner alloc] initWithFrame:CGRectZero];
     self.spinnerView = spinnerView;
-    self.spinnerView.bounds = CGRectMake(0, 0, defaultH*0.8, defaultH*0.8);
+    self.spinnerView.bounds = CGRectMake(0, 0, defaultH * 0.8, defaultH * 0.8);
     self.spinnerView.tintColor = [UIColor whiteColor];
     self.spinnerView.lineWidth = 2;
     self.spinnerView.center = CGPointMake(CGRectGetMidX(self.layer.bounds), CGRectGetMidY(self.layer.bounds));
@@ -82,7 +79,7 @@
     
     self.forDisplayButton = [[UIButton alloc]initWithFrame:self.bounds];
     self.forDisplayButton.userInteractionEnabled = NO;
-    [self.forDisplayButton setBackgroundImage:[[self imageWithColor:color cornerRadius:3] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] forState:UIControlStateNormal];
+    [self.forDisplayButton setBackgroundImage:[[self imageWithColor:color cornerRadius:cornerRadius] resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 10, 10)] forState:UIControlStateNormal];
     [self addSubview:self.forDisplayButton];
     
     self.contentColor = color;
@@ -121,7 +118,6 @@
     }
     
     _isLoading = YES;
-    
     bgView.hidden = NO;
     
     CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
@@ -129,7 +125,7 @@
     animation.fromValue = [NSNumber numberWithFloat:defaultR];
     animation.toValue = [NSNumber numberWithFloat:defaultH*scale*0.5];
     animation.duration = 0.3;
-    [bgView.layer setCornerRadius:defaultH*scale*0.5];
+    [bgView.layer setCornerRadius: defaultH * scale * 0.5];
     [bgView.layer addAnimation:animation forKey:@"cornerRadius"];
 
     [self.forDisplayButton setBackgroundImage:nil forState:UIControlStateNormal];
